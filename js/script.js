@@ -9,6 +9,166 @@ const yearElement = document.getElementById('year');
 const typewriterElement = document.getElementById('typewriter');
 const form = document.getElementById('contactForm');
 const formStatus = document.querySelector('.form-status');
+const langToggle = document.querySelector('.lang-toggle');
+const langOptions = Array.from(document.querySelectorAll('.lang-option'));
+const langMenu = document.querySelector('.lang-menu');
+const translations = {
+  es: {
+    home: 'Inicio',
+    about: 'Sobre mí',
+    experience: 'Experiencia',
+    education: 'Educación',
+    skills: 'Habilidades',
+    certifications: 'Certificaciones',
+    projects: 'Proyectos',
+    contact: 'Contacto',
+    heroEyebrow: 'Portafolio profesional',
+    heroDescription: 'Profesional joven, creativa y orientada a la tecnología, con enfoque en experiencias digitales modernas, elegantes y funcionales. <!-- COMPLETAR AQUÍ -->',
+    heroDownload: 'Descargar CV',
+    heroContact: 'Contactarme',
+    heroProjects: 'Ver proyectos',
+    aboutLabel: 'Sobre mí',
+    aboutTitle: 'Una propuesta profesional elegante y estratégica',
+    aboutDescriptionHeading: 'Descripción profesional',
+    aboutDescriptionText: 'Soy una profesional en constante evolución, con interés en el diseño, el desarrollo web y la creación de experiencias digitales que combinan estética, usabilidad y tecnología. <!-- COMPLETAR AQUÍ -->',
+    aboutInfoHeading: 'Información clave',
+    goalLabel: 'Objetivo profesional:',
+    goalText: 'Construir experiencias digitales de alto impacto y valor. <!-- COMPLETAR AQUÍ -->',
+    profileLabel: 'Perfil profesional:',
+    profileText: 'Enfoque en la mejora continua, la comunicación clara y la ejecución creativa. <!-- COMPLETAR AQUÍ -->',
+    strengthsLabel: 'Fortalezas:',
+    strengthsText: 'Proactividad, organización, aprendizaje rápido y pensamiento visual. <!-- COMPLETAR AQUÍ -->',
+    valuesLabel: 'Valores:',
+    valuesText: 'Responsabilidad, honestidad, disciplina y excelencia. <!-- COMPLETAR AQUÍ -->',
+    interestsLabel: 'Intereses:',
+    interestsText: 'UX/UI, desarrollo frontend, análisis de datos y diseño de productos. <!-- COMPLETAR AQUÍ -->',
+    contactLabel: 'Contacto',
+    contactTitle: 'Conectemos y construyamos algo valioso',
+    contactInfoHeading: 'Información de contacto',
+    emailLabel: 'Correo:',
+    phoneLabel: 'Teléfono:',
+    locationLabel: 'Ubicación:',
+    whatsappLabel: 'WhatsApp:',
+    pendingText: 'Pendiente de completar',
+    formTitle: 'Envíame un mensaje',
+    nameLabel: 'Nombre',
+    messageLabel: 'Mensaje',
+    sendButton: 'Enviar',
+    footerRights: 'Todos los derechos reservados.'
+  },
+  en: {
+    home: 'Home',
+    about: 'About me',
+    experience: 'Experience',
+    education: 'Education',
+    skills: 'Skills',
+    certifications: 'Certifications',
+    projects: 'Projects',
+    contact: 'Contact',
+    heroEyebrow: 'Professional portfolio',
+    heroDescription: 'Young and creative professional focused on technology, with an emphasis on modern, elegant and functional digital experiences. <!-- COMPLETAR AQUÍ -->',
+    heroDownload: 'Download CV',
+    heroContact: 'Contact me',
+    heroProjects: 'View projects',
+    aboutLabel: 'About me',
+    aboutTitle: 'An elegant and strategic professional proposal',
+    aboutDescriptionHeading: 'Professional description',
+    aboutDescriptionText: 'I am a professional in constant evolution, interested in web design, development and creating digital experiences that combine aesthetics, usability and technology. <!-- COMPLETAR AQUÍ -->',
+    aboutInfoHeading: 'Key information',
+    goalLabel: 'Professional goal:',
+    goalText: 'Build high-impact, high-value digital experiences. <!-- COMPLETAR AQUÍ -->',
+    profileLabel: 'Professional profile:',
+    profileText: 'Focus on continuous improvement, clear communication and creative execution. <!-- COMPLETAR AQUÍ -->',
+    strengthsLabel: 'Strengths:',
+    strengthsText: 'Proactivity, organization, fast learning and visual thinking. <!-- COMPLETAR AQUÍ -->',
+    valuesLabel: 'Values:',
+    valuesText: 'Responsibility, honesty, discipline and excellence. <!-- COMPLETAR AQUÍ -->',
+    interestsLabel: 'Interests:',
+    interestsText: 'UX/UI, frontend development, data analysis and product design. <!-- COMPLETAR AQUÍ -->',
+    contactLabel: 'Contact',
+    contactTitle: 'Let’s connect and build something valuable',
+    contactInfoHeading: 'Contact information',
+    emailLabel: 'Email:',
+    phoneLabel: 'Phone:',
+    locationLabel: 'Location:',
+    whatsappLabel: 'WhatsApp:',
+    pendingText: 'Pending to complete',
+    formTitle: 'Send me a message',
+    nameLabel: 'Name',
+    messageLabel: 'Message',
+    sendButton: 'Send',
+    footerRights: 'All rights reserved.'
+  },
+  fr: {
+    home: 'Accueil',
+    about: 'À propos',
+    experience: 'Expérience',
+    education: 'Éducation',
+    skills: 'Compétences',
+    certifications: 'Certifications',
+    projects: 'Projets',
+    contact: 'Contact',
+    heroEyebrow: 'Portfolio professionnel',
+    heroDescription: 'Professionnelle jeune et créative, orientée technologie, avec un intérêt pour des expériences numériques modernes, élégantes et fonctionnelles. <!-- COMPLETAR AQUÍ -->',
+    heroDownload: 'Télécharger le CV',
+    heroContact: 'Me contacter',
+    heroProjects: 'Voir les projets',
+    aboutLabel: 'À propos',
+    aboutTitle: 'Une proposition professionnelle élégante et stratégique',
+    aboutDescriptionHeading: 'Description professionnelle',
+    aboutDescriptionText: 'Je suis une professionnelle en constante évolution, intéressée par le design web, le développement et la création d’expériences numériques alliant esthétique, utilisabilité et technologie. <!-- COMPLETAR AQUÍ -->',
+    aboutInfoHeading: 'Informations clés',
+    goalLabel: 'Objectif professionnel :',
+    goalText: 'Créer des expériences numériques à fort impact et à forte valeur. <!-- COMPLETAR AQUÍ -->',
+    profileLabel: 'Profil professionnel :',
+    profileText: 'Accent mis sur l’amélioration continue, la communication claire et l’exécution créative. <!-- COMPLETAR AQUÍ -->',
+    strengthsLabel: 'Points forts :',
+    strengthsText: 'Proactivité, organisation, apprentissage rapide et pensée visuelle. <!-- COMPLETAR AQUÍ -->',
+    valuesLabel: 'Valeurs :',
+    valuesText: 'Responsabilité, honnêteté, discipline et excellence. <!-- COMPLETAR AQUÍ -->',
+    interestsLabel: 'Intérêts :',
+    interestsText: 'UX/UI, développement frontend, analyse de données et design de produits. <!-- COMPLETAR AQUÍ -->',
+    contactLabel: 'Contact',
+    contactTitle: 'Connectons-nous et construisons quelque chose de précieux',
+    contactInfoHeading: 'Informations de contact',
+    emailLabel: 'Courriel :',
+    phoneLabel: 'Téléphone :',
+    locationLabel: 'Localisation :',
+    whatsappLabel: 'WhatsApp :',
+    pendingText: 'À compléter',
+    formTitle: 'Envoyez-moi un message',
+    nameLabel: 'Nom',
+    messageLabel: 'Message',
+    sendButton: 'Envoyer',
+    footerRights: 'Tous droits réservés.'
+  }
+};
+let currentLang = localStorage.getItem('lang') || 'es';
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const key = element.getAttribute('data-i18n');
+    const translation = translations[currentLang][key];
+    if (translation) {
+      if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+        element.placeholder = translation;
+      } else {
+        element.textContent = translation;
+      }
+    }
+  });
+
+  langToggle.textContent = currentLang.toUpperCase();
+  langOptions.forEach((option) => {
+    option.classList.toggle('active', option.dataset.lang === currentLang);
+  });
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  applyTranslations();
+}
 
 if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
@@ -93,6 +253,23 @@ if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color
 
 themeToggle && (themeToggle.innerHTML = body.classList.contains('dark') ? '☀️' : '🌙');
 
+langToggle?.addEventListener('click', () => {
+  langMenu.classList.toggle('open');
+});
+
+langOptions.forEach((option) => {
+  option.addEventListener('click', () => {
+    setLanguage(option.dataset.lang);
+    langMenu.classList.remove('open');
+  });
+});
+
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.lang-switcher')) {
+    langMenu.classList.remove('open');
+  }
+});
+
 menuToggle?.addEventListener('click', () => {
   navMenu.classList.toggle('open');
 });
@@ -102,6 +279,8 @@ navLinks.forEach((link) => {
     navMenu.classList.remove('open');
   });
 });
+
+applyTranslations();
 
 const counters = document.querySelectorAll('[data-counter]');
 const counterObserver = new IntersectionObserver((entries, observer) => {
