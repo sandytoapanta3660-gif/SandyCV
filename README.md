@@ -1,0 +1,2 @@
+# SandyCV
+TRABAJO 28/07/2026
